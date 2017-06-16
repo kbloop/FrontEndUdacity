@@ -1,0 +1,42 @@
+/*
+
+Your styles go here!
+
+Hint! You'll probably want to start by styling:
+  * <body>
+  * <article>
+  * <h1>
+  * <img>
+
+I've left some boilerplate below for you.
+
+*/
+
+body {
+  background-color: pink;
+  max-width: 900px;
+  margin: auto;
+}
+
+article {
+  width: 100%;
+
+}
+
+h1 {
+
+}
+.full-width{
+  width: 100%;
+  }
+img {
+  max-width: 100%;
+}
+@media (max-width: 600px){
+  article {
+    width: 100%;
+  }
+  img{
+  width: initial;
+  }
+}

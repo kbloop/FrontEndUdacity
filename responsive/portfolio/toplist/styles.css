@@ -1,0 +1,25 @@
+*{
+  -webkit-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  font-family: arial;
+
+}
+.description{
+  color: #7C8B88;
+  font-size: 30px;
+}
+.app{
+  display: flex;
+}
+.title{
+  padding: 20px 20px 5px 20px;
+  background: #33BEBE;
+  color: white;
+  font-weight: 200;
+  font-size: 50px;
+}
+img{
+  padding-right: 20px;
+}

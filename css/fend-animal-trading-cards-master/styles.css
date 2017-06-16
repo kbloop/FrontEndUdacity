@@ -1,0 +1,27 @@
+/* add your CSS here */
+
+img{
+  width: 300px;
+  border: 1px solid #efefef;
+}
+span{
+  font-weight: bold;
+}
+ul{
+  list-style: none;
+  padding-left: 0px;
+}
+#container{
+  width: 300px;
+  padding: 10px;
+  border: 1px solid #efefef;
+  box-shadow: 4px 8px 2px rgba(0,0,0,.125);
+}
+#inner-container{
+  margin-top: 10px;
+  box-sizing: border-box;
+  width: 300px;
+  padding: 5px;
+  padding-top: 0px;
+  border: 1px solid #efefef;
+}
