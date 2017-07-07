@@ -1,8 +1,13 @@
 // Enemies our player must avoid
-var Enemy = function() {
+var Enemy = function(x,y,sp,dir) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
-
+    this.x = x;
+    this.y = y;
+    this.height = 50;
+    this.width = 70;
+    this.vel = dir * sp;
+    this.sp = sp;
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
@@ -14,6 +19,35 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
+    var width = Resources.get(this.sprite).width;
+    var height = Resources.get(this.sprite).height;
+    var area = Math.PI * (width/2) * (height/2);
+
+    // If on the screen
+    if( this.x >= -100 && this.x < canvas.width + 100){
+        if(this.vel < 0) {
+            this.x -= 100 * this.sp * dt;
+        }else {
+            this.x += 100 * this.sp * dt;
+        }
+    }
+    // Elif to the left of the screen
+    else if(this.x <= -100){
+        if(this.vel < 0){
+            this.x = canvas.width + 100;
+        }else{
+            this.x += 100 * this.sp * dt;
+        }
+    }
+    // Elif to the right
+    else if(this.x >= canvas.width + 100) {
+        if(this.vel < 0){
+            this.x -= 100 * this.sp * dt;
+        }else{
+            this.x = -100;
+        }
+    }
+    console.log(dt);
 };
 
 // Draw the enemy on the screen, required method for game
@@ -24,13 +58,80 @@ Enemy.prototype.render = function() {
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
+var Player = function(x,y,sp,dir) {
+    this.x = x;
+    this.y = y;
+    this.vel = sp * dir;
+    this.height = 50;
+    this.width = 60;
 
+    // default character
+    this.sprite = 'images/char-boy.png';
+}
+Player.prototype.update = function(dt) {
+    var width = Resources.get(this.sprite).width;
+    var height = Resources.get(this.sprite).height;
+
+    for(var i=0; i<allEnemies.length; i++){
+        checkCollision(this, allEnemies[i]);
+    }
+    if(this.y <= 0) {
+    alert("You win!");
+    this.resetGame(allEnemies);
+  }
+}
+
+Player.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+}
+function checkCollision(a,b) {
+    if(a.x < b.x + b.width && a.x + a.width > b.x
+    && a.y < b.y + b.height && a.height + a.y > b.y) {
+        a.resetGame(allEnemies);
+    }
+}
+Player.prototype.resetGame = function(allEnemies){
+    for(var i=0; i<3; i++){
+    allEnemies[i] =  new Enemy(50,50+i*85,5+1*i,1);
+    }
+    this.x = 0;
+    this.y = 390;
+}
+Player.prototype.handleInput = function(key) {
+    switch (key) {
+        case "left":
+            if(this.x > 0){
+            this.x -= 102;
+            }
+            break;
+        case "right":
+            if(this.x < 400){
+            this.x += 102;
+            }
+            break;
+        case "up":
+            if(this.y > 0){
+            this.y -= 85;
+            }
+            break;
+        case "down":
+        if(this.y < 390){
+            this.y += 85;
+            }
+        break;
+    }
+}
 
 // Now instantiate your objects.
-// Place all enemy objects in an array called allEnemies
+// Place all enemy objects in an array called allEnemies = [];
 // Place the player object in a variable called player
+var allEnemies = [];
 
+var player = new Player(0,390,10,1);
 
+for(var i=0; i<3; i++){
+    allEnemies[i] =  new Enemy(50,50+i*85,5+1*i,1);
+}
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.

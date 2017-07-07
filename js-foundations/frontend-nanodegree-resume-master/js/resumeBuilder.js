@@ -24,20 +24,12 @@ var bio = {
 
         // Append to the page.
         // Bio info
-        $("#header").prepend(formattedRole);
-        $("#header").prepend(formattedName);
-        $("#header").append(formattedPicture);
-        $("#header").append(HTMLskillsStart);
-
-        $("#topContacts").append(formattedMobile);
-        $("#topContacts").append(formattedEmail);
-        $("#topContacts").append(formattedGithub);
-
-         $("#footerContacts").append(formattedMobile);
-        $("#footerContacts").append(formattedEmail);
-        $("#footerContacts").append(formattedGithub);
+        $("#header").prepend(formattedName, formattedRole);
+        $("#header").append(formattedPicture, HTMLskillsStart);
+        $("#topContacts, #footerContacts").append(formattedMobile, formattedEmail, formattedGithub, formattedLocation);
         $("#main").append(internationalizeButton);
         $("#mapDiv").append(googleMap);
+
         bio.skills.forEach(function replace(skill) {
             var formattedSkill = HTMLskills.replace("%data%", skill);
             if(bio.skills.length > 0){
@@ -149,12 +141,21 @@ var work = {
 };
 
 var projects = {
-    "projects": [{
+    "projects": [
+        {
         "title": "stringer bell",
         "dates": "may-12-17",
         "description": "blah blah blah v blah blah blah blah",
-        "image": "https://www.fillmurray.com/200/200"
-    }]
+        "images": ["https://www.fillmurray.com/200/200"]
+    },
+    {
+        "title": "stringer bell",
+        "dates": "may-12-17",
+        "description": "blah blah blah v blah blah blah blah",
+        "images": ["https://www.fillmurray.com/200/200"]
+
+    }
+    ]
 };
  projects.display = function() {
         // Project info
@@ -167,8 +168,10 @@ var projects = {
             $(".project-entry:last").append(formattedProjectDates);
             var formattedProjectDescription = HTMLprojectDescription.replace("%data%", project.description);
             $(".project-entry:last").append(formattedProjectDescription);
-            var formattedProjectImage = HTMLprojectImage.replace("%data%", project.image);
-            $(".project-entry:last").append(formattedProjectImage);
+            project.images.forEach(function addImages(image) {
+                var formattedProjectImage = HTMLprojectImage.replace("%data%", image);
+                $(".project-entry:last").prepend(formattedProjectImage);
+            });
         });
     };
 
