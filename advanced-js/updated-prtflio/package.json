@@ -1,0 +1,30 @@
+{
+  "name": "updated-portfolio",
+  "version": "1.0.0",
+  "description": "An updated performant portfolio project for udacity fend degree,",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "browser-sync": "^2.18.12",
+    "gulp": "^3.9.1",
+    "gulp-clean-css": "^3.7.0",
+    "gulp-gm": "0.0.8",
+    "gulp-imagemin": "^3.3.0",
+    "gulp-jshint": "^2.0.4",
+    "gulp-responsive": "^2.8.0",
+    "gulp-strip-debug": "^1.1.0",
+    "pump": "^1.0.2"
+  },
+  "dependencies": {
+    "gulp-compress": "0.0.9",
+    "gulp-concat": "^2.6.1",
+    "gulp-image-resize": "^0.12.0",
+    "gulp-minify-html": "^1.0.6",
+    "jshint": "^2.9.5",
+    "ngrok": "^2.2.15"
+  }
+}
