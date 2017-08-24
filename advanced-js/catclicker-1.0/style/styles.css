@@ -1,0 +1,28 @@
+body {
+    background: honeydew;
+}
+
+section {
+    display: flex;
+    flex-direction: row-reverse;
+    background: white;
+}
+
+article {
+    float: left;
+}
+
+header {
+    text-align: center;
+    padding: 10px 5px;
+}
+
+h3.bold {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+img {
+    height: 450px;
+
+}

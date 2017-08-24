@@ -1,22 +1,19 @@
 ## Website Performance Optimization portfolio project
 
-Your challenge, if you wish to accept it (and we sure hope you will), is to optimize this online portfolio for speed! In particular, optimize the critical rendering path and make this page render as quickly as possible by applying the techniques you've picked up in the [Critical Rendering Path course](https://www.udacity.com/course/ud884).
-
-To get started, check out the repository and inspect the code.
+This project is a web performance optimisations test, with the original site featuring many bugs and ineffecient code causing poor performance. The challenge was to find and optimize all of these bugs and areas of poor performance.
 
 ### Getting started
 
-#### Part 1: Running with gulp and browsersync
+This project uses (gulp)[https://gulpjs.com/] as a build system, to install use
 
-Some useful tips to help you get started:
-
-1. npm install gulp -g
-2. install dependencies with npm install
-
-  ```bash
-  $> cd /path/to/your-project-folder
-  $> npm install
   ```
+    npm install --save -dev
+    // run build of dist folder
+    gulp
+    // will set up a localhost
+  ```
+
+This will create a local server on port 3000 with
 
 #### Part 2: Optimizations made
 

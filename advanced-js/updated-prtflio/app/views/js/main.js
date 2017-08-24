@@ -407,13 +407,13 @@ var resizePizzas = function(size) {
   function changeSliderLabel(size) {
     switch(size) {
       case "1":
-        document.querySelector("#pizzaSize").innerHTML = "Small";
+        document.getElementById("pizzaSize").innerHTML = "Small";
         return;
       case "2":
-        document.querySelector("#pizzaSize").innerHTML = "Medium";
+        document.getElementById("pizzaSize").innerHTML = "Medium";
         return;
       case "3":
-        document.querySelector("#pizzaSize").innerHTML = "Large";
+        document.getElementById("pizzaSize").innerHTML = "Large";
         return;
       default:
         console.log("bug in changeSliderLabel");
@@ -448,21 +448,27 @@ var resizePizzas = function(size) {
     return dx;
   }
 
+
   // Iterates through pizza elements on the page and changes their widths
   function changePizzaSizes(size) {
-    var window = document.querySelector("#randomPizzas").offsetWidth;
-    var pizzas = document.querySelectorAll(".randomPizzaContainer");
-    // All the pizzas are the same size, why do this for each of them
+    // access it once and cache in var
+    var original = document.getElementById("randomPizzas");
+      /*
+      once I stuck it in a var it no longer is making requests to the dom,
+      but if i alter this 'original' node tree, it alters the page? wut.
+      I thought I would have to take this newly changed node tree(changed style.width) and
+      then use something like nodeReplace(), or replaceChild() swapping out the old tree for the new one. Which would probably suck all the speed.
+      But nope.
+      */
+    var window = original.offsetWidth;
+    var pizzas = original.getElementsByClassName("randomPizzaContainer");
+    // All the pizzas are the same size
     var width = pizzas[0].offsetWidth;
     var dx = determineDx(pizzas[0], size, window, width);
-    // for every pizza calc the size and store vals in temp array pizzas
-    for (var i = 0; i < pizzas.length; i++) {
+    // for every pizza
+    for (var i = 0, len = pizzas.length; i < len; i++) {
       var newwidth = (width + dx) + 'px';
       pizzas[i].style.width = newwidth;
-    }
-    // batch write styles to avoid layout trashing
-    for(var j = 0; j < pizzas.length; j++){
-      document.querySelectorAll(".randomPizzaContainer")[j].style.width = pizzas[j].style.width;
     }
   }
 
@@ -478,8 +484,9 @@ var resizePizzas = function(size) {
 window.performance.mark("mark_start_generating"); // collect timing data
 
 // This for-loop actually creates and appends all of the pizzas when the page loads
+var pizzasDiv = document.getElementById("randomPizzas");
+// limiting the document calls by taking the dom access outside the forloop
 for (var i = 2; i < 100; i++) {
-  var pizzasDiv = document.getElementById("randomPizzas");
   pizzasDiv.appendChild(pizzaElementGenerator(i));
 }
 
@@ -509,16 +516,17 @@ function logAverageFrame(times) {   // times is the array of User Timing measure
 // Moves the sliding background pizzas based on scroll position
 function updatePositions() {
   frame++;
+  var phase = [];
   window.performance.mark("mark_start_frame");
   var top = document.body.scrollTop;
   var items = document.querySelectorAll('.mover');
-  // grab all movers and add swiggle them on a sinwave
-  for (var i = 0; i < items.length; i++) {
-    // all that forced reflow has me jazzed
-    var phase = Math.sin((top / 1250) + (i % 5));
-    items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
-  }
 
+  for (var k = 0; k < 5; k++){
+    phase.push(Math.sin(top / 1250 + k) * 100);
+  }
+  for (var i = 0; i < items.length; i++) {
+    items[i].style.left = items[i].basicLeft + phase[i%5] + 'px';
+  }
   // User Timing API to the rescue again. Seriously, it's worth learning.
   // Super easy to create custom metrics.
   window.performance.mark("mark_end_frame");
@@ -534,17 +542,27 @@ window.addEventListener('scroll', updatePositions);
 
 // Generates the sliding pizzas when the page loads.
 document.addEventListener('DOMContentLoaded', function() {
-  var cols = 8;
   var s = 256;
-  for (var i = 0; i < 200; i++) {
-    var elem = document.createElement('img');
+  var intResWidth = window.innerWidth;
+  var intResHeight = window.innerHeight;
+
+  // find the min number of columns we need based on screen width
+  var cols = Math.ceil(intResWidth/s);
+
+  var rows = Math.ceil(intResHeight/s);
+
+  zas = rows*cols;
+  // move elem into the init of for loop to stop it being created each time
+  var movingZas = document.getElementById("movingPizzas1");
+  for (var i = 0, elem; i < zas; i++) {
+    elem = document.createElement('img');
     elem.className = 'mover';
     elem.src = "images/pizza-small.png";
     elem.style.height = "100px";
     elem.style.width = "73.333px";
     elem.basicLeft = (i % cols) * s;
     elem.style.top = (Math.floor(i / cols) * s) + 'px';
-    document.querySelector("#movingPizzas1").appendChild(elem);
+    movingZas.appendChild(elem);
   }
   updatePositions();
 });

@@ -31,7 +31,7 @@ var path = {
 gulp.task('browserSync', ['markup', 'scripts', 'styles'], function () {
     browserSync.init({
         server: {
-            baseDir: './dist'
+            baseDir: './'
         }
     });
 });
@@ -71,15 +71,22 @@ gulp.task('images', ['clean'], function() {
     .pipe(imagemin({verbose: true}))
     .pipe(imageResponsive({
         // Unique photos
-        '**/profilepic.jpg' : {
+        '**/profilepic.jpg' : [{
             rename: { suffix: '-small'}
         },
-        '**/*pizza.png' : {
-            rename: {
-                suffix: '-small',
-                // extname: '.webp'
-            }
+        {
+            rename: { suffix: '-small@2x'},
+            width: 140
+
+        }],
+        '**/*pizza.png' : [{
+            rename: { suffix: '-small'}
         },
+        {
+            rename: { suffix: '-small@2x'},
+            width: 410
+
+        }],
         '**/*2048.png' : {
             rename: {
                 suffix: '-small',
