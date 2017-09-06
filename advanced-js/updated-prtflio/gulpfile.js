@@ -31,7 +31,7 @@ var path = {
 gulp.task('browserSync', ['markup', 'scripts', 'styles'], function () {
     browserSync.init({
         server: {
-            baseDir: './'
+            baseDir: './dist'
         }
     });
 });

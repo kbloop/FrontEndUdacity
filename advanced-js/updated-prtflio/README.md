@@ -10,7 +10,7 @@ This project uses (gulp)[https://gulpjs.com/] as a build system, to install use
     npm install --save -dev
     // run build of dist folder
     gulp
-    // will set up a localhost
+    // will set up a localhost server on port 3000
   ```
 
 This will create a local server on port 3000 with
