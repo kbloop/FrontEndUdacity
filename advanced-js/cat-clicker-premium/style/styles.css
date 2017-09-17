@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css?family=Abel|Ubuntu:400,500,700');
+
+body {
+    font-family: 'Ubuntu', sans-serif;
+    background-color: #0FA3B1;
+}
+
+section {
+    display: flex;
+    flex-direction: row-reverse;
+    background: white;
+}
+
+article {
+    float: left;
+}
+
+header {
+    text-align: center;
+    padding: 10px 5px;
+}
+
+h2 {
+    font-family: 'Abel', sans-serif;
+    font-size: 46;
+    color: #F7A072;
+    text-align: center;
+    padding-top: 35px;
+}
+
+img {
+    height: 360px;
+    width: 360px;
+    border-radius: 50%;
+    box-shadow: 2px 2px 5px rgba(0,0,0,.5);
+    box-shadow: 4px 12px 15px rgba(0,0,0,.24);
+
+}
+ol {
+    margin-left: 50%;
+    padding-top: 40px;
+}
+
+li {
+    padding: 20px;
+}
+#main-image {
+    background: inherit;
+    display: flex;
+    flex-direction: row;
+}
+
+#cat-display {
+    padding: 0px 50px 50px 50px;
+}
+
+#cat-list {
+    width: 100%;
+}
+
+h3 {
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 14px;
+    color: #EDDEA4;
+    font-weight: 200;
+    text-align: center;
+}
