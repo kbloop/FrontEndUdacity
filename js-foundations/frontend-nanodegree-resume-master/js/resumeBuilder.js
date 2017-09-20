@@ -12,7 +12,6 @@ var bio = {
     "skills": ["creative coder", "front-end dev", "uix design"],
     "biopic": "https://www.fillmurray.com/200/200",
     "display": function () {
-        // TODO display the data from bio.
         // Bio information
         var formattedName = HTMLheaderName.replace("%data%", bio.name);
         var formattedRole = HTMLheaderRole.replace("%data%", bio.role);

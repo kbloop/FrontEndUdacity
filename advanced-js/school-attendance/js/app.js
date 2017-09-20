@@ -3,14 +3,6 @@
  * attendance record if one is not found
  * within localStorage.
  */
-var namesArray = ["Slappy the Frog", "Lilly the Lizard",  "Paulrus the Walrus", "Gregory the Goat", "Adam the Anaconda"];
-
-/*
-    * read name => append
-    * read days missed from days array => set inputs to match
-    * read totals => append
-    * event listener on click of input => update days array
-*/
 
 (function() {
 
