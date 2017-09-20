@@ -4,16 +4,27 @@
     </head>
     <body>
         <h2>fluffer booper</h2>
-
-        <section id="main-image">
+        <section>
             <article id="cat-display">
+                <header>
+                    <h3 id="cat-name"></h3>
+                </header>
                 <h2 id="cat-count"></h2>
-                <h3 id="cat-name"></h3>
                 <img id="cat-img" src="" alt="">
+                <button id="admin-btn">admin</button>
+                <article id="admin">
+                        <!-- <form> -->
+                            <input type="text" id="inp-name" placeholder="%data%">
+                            <input type="text" id="inp-count" placeholder="%data%">
+                            <input type="text" id="inp-src" placeholder="%data%">
+                            <button id="cancel-btn">cancel</button>
+                            <button id="save-btn">save</button>
+                        <!-- </form> -->
+                    </article>
             </article>
-            <article id="cat-list">
-                <h3>Fluffers <span class="numb"></span></h3>
-                <ol id="cat-holder">
+            <article id="list-holder">
+                <h3>Fluffers <span class="cat-total-count"></span></h3>
+                <ol id="cat-list">
                 </ol>
             </article>
         </section>

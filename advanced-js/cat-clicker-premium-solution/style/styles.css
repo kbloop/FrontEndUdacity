@@ -4,21 +4,15 @@ body {
     font-family: 'Ubuntu', sans-serif;
     background-color: #0FA3B1;
 }
-.hidden {
-    display: none;
-}
 
 section {
     display: flex;
     flex-direction: row-reverse;
     background: white;
 }
-input {
-    width: 100%;
-}
+
 article {
     float: left;
-    width: 30%;
 }
 
 header {
@@ -50,15 +44,10 @@ ol {
 li {
     padding: 20px;
 }
-section {
+#main-image {
     background: inherit;
     display: flex;
     flex-direction: row;
-}
-
-#cat-count {
-    padding-top: 0px;
-    margin-top: 0px;
 }
 
 #cat-display {
