@@ -1,0 +1,165 @@
+<!-- This is the corresponding "starter code" for 04_Hello Map in Udacity and Google's Maps
+API Course, Lesson 1 -->
+<html>
+ <head>
+ <!-- styles put here, but you can include a CSS file and reference it instead! -->
+   <style type="text/css">
+     html, body { height: 100%; margin: 0; padding: 0; }
+     #map {
+        position: relative;
+    overflow: hidden;
+    display: inline-block;
+    top: 560px;
+    height: 100%;
+    width: 70%;
+    margin-top: -560px;
+    }
+     .txt-blk { color: black}
+     #container { height: 100%; }
+     .optionsBox {
+         background: white;
+         border: 1px solid #999;
+         display: inline-block;
+         border-radius: 3px;
+         line-height: 35px;
+         height: 100%;
+         padding: 10px 10px 30px 10px;
+         text-align: left;
+         width: 340px;
+     }
+   </style>
+ </head>
+ <body>
+
+     <div id="container">
+        <div class="optionsBox">
+            <h1>Find Your New NYC Home!</h1>
+            <div>
+                <input type="button" id="show-listings" value="Show Listings">
+                <input type="button" id="hide-listings" value="Hide Listings">
+            </div>
+        </div>
+     <div id="map"></div>
+   </div>
+
+
+   <script>
+     var map;
+
+     var markers = [];
+
+     function initMap() {
+        var googleHQ = {lat: 40.7413549, lng: -73.99802439999996};
+       map = new google.maps.Map(document.getElementById('map'),{
+           center: googleHQ,
+           zoom: 12
+       });
+
+       var tribeca = {lat: 40.179526, lng: -74.00890244};
+
+
+      var infoWindow = new google.maps.InfoWindow({
+          content: "This is the infowindow content!"
+      });
+
+      var locations = [
+          { title: "Park Ave Penthouse", location: {lat: 40.7713024, lng: -73.9632393} },
+          { title: "Chelsea Loft", location: {lat: 40.7444883, lng: -73.9949465 } },
+          { title: "Union Square Open Floor Plan", location: {lat: 40.7347062, lng: -73.9895759} },
+          { title: "East Village Hip Studio", location: {lat: 40.728177 , lng: -73.984377 } },
+          { title: "TriBeCa Artsy Bachelor Pad", location: {lat: 40.7195264, lng: -74.0089934} },
+          { title: "Chinatown Homey Space", location: {lat: 40.7180628, lng: -74.9961237} }
+      ];
+
+      var largeInfoWindow = new google.maps.InfoWindow();
+      var bounds = new google.maps.LatLngBounds();
+
+      for(var i=0; i<locations.length; i++){
+
+        // Set position from array of locations
+        var position = locations[i].location;
+
+        // Set title from array of locations
+        var title = locations[i].title;
+
+        // Create new marker from the location & title
+        var marker = new google.maps.Marker({
+            position: position,
+            title: title
+        });
+
+        // Add this new marker to the marker array
+        markers.push(marker);
+        // Create onclick event to open infowindow at each location
+        marker.addListener('click', function() {
+            populateInfoWindow(this, largeInfoWindow);
+        });
+      }
+
+      document.getElementById('show-listings').addEventListener('click', showListings);
+      document.getElementById('hide-listings').addEventListener('click', hideListings);
+    }
+    function showListings() {
+        var bounds = new google.maps.LatLngBounds();
+
+        for(var i=0; i<markers.length; i++){
+            // Extend the boundary of the map with the pos of the new marker.
+            // bounds.extend(marker.position);
+            markers[i].setMap(map);
+            bounds.extend(markers[i].position);
+            }
+        map.fitBounds(bounds);
+        console.log(bounds)
+      };
+
+      function hideListings() {
+        for(var i=0; i<markers.length; i++){
+            markers[i].setMap(null);
+            }
+      };
+
+      // Each time a marker is clicked this will populate the infowindow. Only one infowondow will be on the map
+      // With its position & content being set by the markers data
+      function populateInfoWindow(marker, infowindow) {
+          if(infowindow.marker != marker) {
+            infowindow.marker = marker;
+            infowindow.setContent('<div class="txt-blk">' + marker.title + '</div>');
+            infowindow.open(map,marker);
+            infowindow.addListener('closeClick', function() {
+                infowindow.setMarker(null);
+            });
+            var streetViewService = new google.maps.StreetViewService();
+            var radius= 50;
+
+            function getStreetView(data, status) {
+                if(status === google.maps.StreetViewStatus.ok) {
+                    var nearStreetViewLocation = data.location.latLng;
+                    var heading = google.maps.geometry.spherical.computeHeading(
+                        nearStreetViewLocation, marker.postition);
+                        infowindow.setContent('<div>'+ marker.title +'</div><div id="pano"></div>');
+                        var panoramaOpts = {
+                            position: nearStreetViewLocation,
+                            pov: {
+                                heading: heading,
+                                pitch: 30
+                            }
+                        };
+                        var panorama = new google.maps.StreetViewPanorama(
+                            document.getElementById('pano'),panoramaOpts)
+                        } else {
+                            infowindow.setContent('<div>'+ marker.title +'</div>'
+                            +'<div>No Street View Found.</div>')
+                        }
+
+                        streetviewService.getPanoramaByLocation(marker.position, radius, getStreetView);
+            }
+
+          }
+      }
+   </script>
+   <!--TODO: Load the JS API ASYNCHRONOUSLY below.-->
+   <script async defer
+    src="https://maps.googleapis.com/maps/api/js?libraries=drawing&key=AIzaSyBhsyQJvy2if7mxgrAjAFdOyhwRFibfajI&v=3&callback=initMap">
+   </script>
+ </body>
+</html>
